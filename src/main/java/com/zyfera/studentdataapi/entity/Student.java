@@ -1,4 +1,4 @@
-package com.zyfera.studentdataapi.entitiy;
+package com.zyfera.studentdataapi.entity;
 
 import java.util.List;
 
