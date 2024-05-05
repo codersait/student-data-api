@@ -9,16 +9,26 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Name is mandatory")
     private String name;
+    @NotBlank(message = "Surname is mandatory")
     private String surname;
+    @NotBlank(message = "Student Number is mandatory")
+    @Pattern(regexp = "^[B][0-9A-Za-z]{9}$", message = "Invalid student number format (must start with B and contain 9 alphanumeric characters)")
     private String stdNumber;
 
+    @Valid
     @ElementCollection
     @CollectionTable(name = "student_grades")
     private List<Grade> grades;
@@ -78,7 +88,12 @@ public class Student {
 
 @Embeddable
 class Grade {
+    @NotBlank(message = "Course code is mandatory")
+    @Pattern(regexp = "^[A-Z]{2}[0-9]{3}$", message = "Invalid course code format (must be 2 uppercase letters followed by 3 digits)")
     private String code;
+
+    @Min(value = 0, message = "Grade value cannot be negative")
+    @Max(value = 100, message = "Grade value cannot exceed 100")
     private int value;
 
     public Grade() {
