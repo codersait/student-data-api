@@ -16,6 +16,8 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String surname;
+    private String stdNumber;
 
     @ElementCollection
     @CollectionTable(name = "student_grades")
@@ -24,9 +26,11 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id, String name, List<Grade> grades) {
+    public Student(Long id, String name, String surname, String stdNumber, List<Grade> grades) {
         this.id = id;
         this.name = name;
+        this.surname = surname;
+        this.stdNumber = stdNumber;
         this.grades = grades;
     }
 
@@ -53,6 +57,23 @@ public class Student {
     public void setGrades(List<Grade> grades) {
         this.grades = grades;
     }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getStdNumber() {
+        return stdNumber;
+    }
+
+    public void setStdNumber(String stdNumber) {
+        this.stdNumber = stdNumber;
+    }
+
 }
 
 @Embeddable
